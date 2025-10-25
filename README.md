@@ -17,7 +17,7 @@
 - [Connect with Metamask while user hasn't installed Metamask yet](https://www.awesomescreenshot.com/video/45649284?key=bfc720a8f0a7bd2a001c0de8d1f5a0a4)
 
 ### Further ideas
-- Use SaaS like [WalletConnect](`https://walletconnect.com/`) for wallet connection management
+- Use SaaS like [WalletConnect](https://walletconnect.com/) for better wallet connection integration
 
 ### Contact
 <Min Ju> route666@live.cn
