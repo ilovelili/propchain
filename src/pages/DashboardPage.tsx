@@ -1,16 +1,12 @@
 import React from 'react';
 import { User, Wallet, Heart, Search, TrendingUp, Star, Shield } from 'lucide-react';
 import { mockUser, mockMarketData } from '../data/mockData';
+import { useWallet } from '../context/WalletContext';
 
-interface DashboardPageProps {
-  walletConnected: boolean;
-  onConnectWallet: () => void;
-}
+export const DashboardPage: React.FC = () => {
+  const { account, formattedAccount, openModal, disconnect } = useWallet();
+  const walletConnected = Boolean(account);
 
-export const DashboardPage: React.FC<DashboardPageProps> = ({ 
-  walletConnected, 
-  onConnectWallet 
-}) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50/30 to-blue-50/30 relative overflow-hidden">
       {/* Background Elements */}
@@ -70,6 +66,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 <p className={`text-sm font-semibold ${walletConnected ? 'text-emerald-600' : 'text-red-600'}`}>
                   {walletConnected ? 'Connected' : 'Disconnected'}
                 </p>
+                {walletConnected && formattedAccount && (
+                  <p className="mt-1 font-mono text-xs text-gray-500">{formattedAccount}</p>
+                )}
               </div>
               <Wallet className={`w-8 h-8 ${walletConnected ? 'text-emerald-500' : 'text-gray-400'}`} />
             </div>
@@ -148,9 +147,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     <span className="text-emerald-600 font-medium">Wallet Connected</span>
                   </div>
                   <div className="text-sm text-gray-600 break-all bg-gray-50 p-3 rounded-lg">
-                    0x742d35cc6634C0532925a3b8D6aD8a7e15b2a9d1
+                    {account}
                   </div>
-                  <button className="w-full border border-red-300 text-red-600 hover:bg-red-50 py-2 px-4 rounded-lg transition-colors">
+                  <button
+                    onClick={disconnect}
+                    className="w-full border border-red-300 text-red-600 hover:bg-red-50 py-2 px-4 rounded-lg transition-colors"
+                  >
                     Disconnect Wallet
                   </button>
                 </div>
@@ -160,7 +162,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     <Wallet className="w-12 h-12 text-gray-400 mx-auto mb-3" />
                     <p className="text-gray-600 mb-4">Connect your wallet to access NFT properties and blockchain features.</p>
                     <button
-                      onClick={onConnectWallet}
+                      onClick={openModal}
                       className="w-full bg-gradient-to-r from-blue-600 to-emerald-500 hover:from-blue-700 hover:to-emerald-600 text-white py-3 px-4 rounded-lg font-semibold transition-all duration-300"
                     >
                       Connect Wallet
